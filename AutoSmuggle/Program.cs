@@ -76,9 +76,9 @@ namespace AutoSmuggle
                         arguments[argument] = string.Empty;
                 }
 
-                if (arguments.Count == 0)
+                if (arguments.Count < 2)
                 {
-                    PrintError("[-] No arguments specified. Please specify path of the binary to smuggle");
+                    PrintError("[-] No arguments specified. Autosmuggle <path of file to smuggle> <output of file>.");
                 }
 
                 else if (arguments.Count == 2)
