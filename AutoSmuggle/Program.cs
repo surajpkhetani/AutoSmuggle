@@ -52,7 +52,6 @@ namespace AutoSmuggle
                 "        </script>\n" +
                 "    </body>\n" +
                 "</html>";
-            System.Console.WriteLine("[*] Writing");
             System.IO.File.WriteAllText(@"smuggle.html", htmlbody);
             return null;
         }
