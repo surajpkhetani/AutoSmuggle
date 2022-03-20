@@ -7,4 +7,4 @@ Autosmuggle.exe <path-of-your-binary-to-be-smuggled> <output-expected>
 Autosmuggle.exe yourfile.exe smuggledfile.exe
 ```  
 
-This will create a file called smuggled.html in your current directory.
+This will create a file called `smuggled.html` in your current directory.
