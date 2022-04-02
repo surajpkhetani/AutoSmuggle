@@ -11,4 +11,4 @@ This will create a file called `smuggled.html` in your current directory.
 
 
 # To Do
-Add an option to include CAPTCHA in your smuggled page
+Add an option to include CAPTCHA in the smuggled file
