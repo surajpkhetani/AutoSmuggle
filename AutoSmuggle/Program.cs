@@ -52,7 +52,10 @@ namespace AutoSmuggle
                 "        </script>\n" +
                 "    </body>\n" +
                 "</html>";
-            System.IO.File.WriteAllText(@"smuggle.html", htmlbody);
+            string file = filename;
+            var file2 = file.Split('.')[0];
+            var file3 = file.Split('.')[1];
+            System.IO.File.WriteAllText("smuggle"+"-"+file3+".html", htmlbody);
             return null;
         }
         public static void PrintError(string error)
