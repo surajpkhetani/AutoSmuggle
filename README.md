@@ -12,7 +12,7 @@ Autosmuggle.exe C:\Path\To\yourfile.exe smuggledfile.exe svg
 [+] File Written to Current Directory...
 ```  
 
-This will create a file called `smuggled.html` in your current directory.
+This will create a file called `smuggled.html`or `smuggled.svg` in your current directory.
 
 
 # To Do
