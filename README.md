@@ -19,4 +19,4 @@ This will create a file called `smuggled.html`or `smuggled.svg` in your current 
 Add an option to include CAPTCHA in the smuggled file
 
 # Contributions
-Thanks to @rootup for their contribution to SVG Based Smuggling
+Thanks to @rootup (@RandomDhiraj) for their contribution to SVG Based Smuggling
